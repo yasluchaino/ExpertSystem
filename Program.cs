@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Alchemy
+namespace Minecraft
 {
     static class Program
     {

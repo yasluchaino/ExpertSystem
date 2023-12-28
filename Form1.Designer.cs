@@ -1,4 +1,4 @@
-﻿namespace Alchemy
+﻿namespace Minecraft
 {
     partial class Form1
     {

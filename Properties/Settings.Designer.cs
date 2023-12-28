@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GameOfThrones.Properties {
+namespace Minecraft.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

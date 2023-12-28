@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Alchemy
+namespace Minecraft
 {
     public partial class Form1 : Form
     {
@@ -33,16 +33,9 @@ namespace Alchemy
             initialFacts = new Dictionary<int, Fact>();
             terminals = new Dictionary<int, Fact>();
             finded = new Dictionary<string, bool>();
-            addInitialFact(1);
-            addInitialFact(2);
-            addInitialFact(3);
-            addInitialFact(4);
             load();
         }
-
-        /// <summary>
-        /// добавить правила в нужном формате в файл CLIPS  
-        /// </summary>
+        // добавить правила в нужном формате в файл CLIPS  
         private void initClipsRules()
         {
             var clipsBaseText = File.ReadAllText(minecraft_Base, Encoding.UTF8);
@@ -54,31 +47,22 @@ namespace Alchemy
             }
             File.WriteAllText(minecraft, stringBuilder.ToString(), Encoding.UTF8);
         }
-
-        /// <summary>
-        /// Загрузить факты в списки
-        /// </summary>
+        // Загрузить факты в списки
         private void load()
         {
             foreach (var fact in facts.Values)
             {
-
                 allFactsListBox.Items.Add(fact.ToListItem());
             }
         }
 
-        /// <summary>
-        /// достает id файла из строки в списке
-        /// </summary>
+        // достает id файла из строки в списке
         private int parseFactID(string str)
         {
             return int.Parse(str.Split('.')[0]);
         }
 
-        /// <summary>
-        /// добавление начального фактов
-        /// </summary>
-        /// <param name="factID">id факта - ключ в facts</param>
+        // добавление начального фактов
         private void addInitialFact(int factID)
         {
             if (initialFacts.ContainsKey(factID))
@@ -87,11 +71,7 @@ namespace Alchemy
             initialFacts[factID] = fact;
             initialFactsListBox.Items.Add(fact.ToListItem());
         }
-
-        /// <summary>
-        /// добавление терминала
-        /// </summary>
-        /// <param name="factID">id факта - ключ в facts</param>
+        // добавление терминала
         private void addTerminal(int factID)
         {
             if (terminals.ContainsKey(factID))
@@ -102,10 +82,7 @@ namespace Alchemy
             terminals[factID] = fact;
             terminalsListBox.Items.Add(fact.ToListItem());
         }
-
-        /// <summary>
-        /// Добавить заданные факты в CLIPS
-        /// </summary>
+        //Добавить заданные факты в CLIPS
         private void addFactsToClips()
         {
             foreach (var fact in initialFacts.Values)
@@ -114,18 +91,13 @@ namespace Alchemy
                 textBox2.Text += $"Добавлен исходный факт {fact.ToListItem()}" + System.Environment.NewLine;
             }
         }
-
-        /// <summary>
-        /// Обработать полученное сообщение от CLIPS
-        /// </summary>
+        // Обработать полученное сообщение от CLIPS
         private void handleMessage(string message)
         {
             textBox2.Text += message + System.Environment.NewLine;
         }
 
-        /// <summary>
-        /// Выполнить шаг вывода в CLIPS
-        /// </summary>
+        // Выполнить шаг вывода в CLIPS
         private bool nextStep()
         {
             clips.Run();
@@ -152,22 +124,14 @@ namespace Alchemy
             return true;
         }
 
-        /// <summary>
-        /// добавляем факт в терминалы при двойном щелчке
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // добавляем факт в терминалы при двойном щелчке
         private void allFactsListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (allFactsListBox.SelectedItem == null) return;
             addTerminal(parseFactID(allFactsListBox.SelectedItem.ToString()));
         }
 
-        /// <summary>
-        /// добавляем факт в начальные при нажатии пробела
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // добавляем факт в начальные при нажатии пробела
         private void allFactsListBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (allFactsListBox.SelectedItem == null) return;
@@ -177,23 +141,15 @@ namespace Alchemy
             }
         }
 
-        /// <summary>
-        /// удаляем факт из начальных при двойном щелчке по нему
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void initialFactsListBox_MouseDoubleClick(object sender, MouseEventArgs e)
+  // удаляем факт из начальных при двойном щелчке по нему
+         private void initialFactsListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (initialFactsListBox.SelectedItem == null) return;
             initialFacts.Remove(parseFactID(initialFactsListBox.SelectedItem.ToString()));
             initialFactsListBox.Items.Remove(initialFactsListBox.SelectedItem);
         }
 
-        /// <summary>
-        /// удаляем начальный факт из терминалов при двойном щелчке по нему
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // удаляем начальный факт из терминалов при двойном щелчке по нему
         private void terminalsListBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (terminalsListBox.SelectedItem == null) return;
@@ -205,11 +161,8 @@ namespace Alchemy
             }
         }
 
-        /// <summary>
-        /// запуск CLIPS
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        
+        // запуск CLIPS
         private void start_Click(object sender, EventArgs e)
         {
             textBox2.Text = "";
@@ -226,11 +179,8 @@ namespace Alchemy
             allButton.Enabled = true;
         }
 
-        /// <summary>
-        /// следующий шаг CLIPS
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        
+        // следующий шаг CLIPS
         private void next_Click(object sender, EventArgs e)
         {
             nextStep();
